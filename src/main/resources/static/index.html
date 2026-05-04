@@ -3,150 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITM Ride - Carpooling Universitario</title>
+    <title>ITM Ride</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f0f2f5; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f7fa; color: #333; }
 
         header {
-            background: #1a73e8;
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
             color: white;
-            padding: 16px 32px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            padding: 20px 32px;
+            text-align: center;
         }
-        header h1 { font-size: 22px; }
-        header p { font-size: 13px; opacity: 0.85; }
+        header h1 { font-size: 28px; margin-bottom: 4px; }
+        header p { font-size: 14px; opacity: 0.85; }
 
         nav {
-            background: white;
             display: flex;
-            gap: 8px;
-            padding: 12px 32px;
-            border-bottom: 1px solid #ddd;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         nav button {
-            padding: 8px 20px;
-            border: none;
-            border-radius: 20px;
+            padding: 10px 28px;
+            border: 2px solid #1a73e8;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 14px;
-            background: #f0f2f5;
-            color: #333;
+            font-size: 15px;
+            font-weight: 600;
+            background: white;
+            color: #1a73e8;
             transition: all 0.2s;
         }
-        nav button.active {
+        nav button.active, nav button:hover {
             background: #1a73e8;
             color: white;
         }
 
-        .container { max-width: 900px; margin: 32px auto; padding: 0 16px; }
+        .container { max-width: 860px; margin: 32px auto; padding: 0 16px; }
 
         .section { display: none; }
         .section.active { display: block; }
 
         .card {
             background: white;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
         }
-        .card h2 { font-size: 18px; margin-bottom: 16px; color: #1a73e8; }
+        .card h2 {
+            font-size: 17px;
+            margin-bottom: 20px;
+            color: #1a73e8;
+            border-bottom: 2px solid #e8f0fe;
+            padding-bottom: 10px;
+        }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 14px;
+            margin-bottom: 20px;
         }
-        .form-group { display: flex; flex-direction: column; gap: 4px; }
-        .form-group label { font-size: 13px; color: #555; font-weight: bold; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 13px; color: #555; font-weight: 600; }
         .form-group input, .form-group select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 10px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 10px;
             font-size: 14px;
             outline: none;
             transition: border 0.2s;
+            background: #fafafa;
         }
         .form-group input:focus, .form-group select:focus {
             border-color: #1a73e8;
+            background: white;
         }
 
         .btn {
-            padding: 10px 24px;
+            padding: 11px 28px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 14px;
-            font-weight: bold;
-            transition: opacity 0.2s;
+            font-weight: 600;
+            transition: all 0.2s;
         }
-        .btn:hover { opacity: 0.85; }
+        .btn:hover { transform: translateY(-1px); opacity: 0.9; }
         .btn-primary { background: #1a73e8; color: white; }
-        .btn-danger { background: #e53935; color: white; }
-        .btn-warning { background: #fb8c00; color: white; }
+        .btn-danger { background: #e53935; color: white; font-size: 12px; padding: 6px 14px; border-radius: 8px; }
+        .btn-warning { background: #fb8c00; color: white; font-size: 12px; padding: 6px 14px; border-radius: 8px; }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
         th {
-            background: #f0f2f5;
-            padding: 10px 12px;
+            background: #e8f0fe;
+            padding: 11px 14px;
             text-align: left;
-            font-size: 13px;
-            color: #555;
+            font-size: 12px;
+            color: #1a73e8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        td { padding: 10px 12px; border-bottom: 1px solid #f0f2f5; }
-        tr:hover { background: #fafafa; }
+        td { padding: 11px 14px; border-bottom: 1px solid #f0f2f5; vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8fbff; }
 
         .badge {
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
         .badge-conductor { background: #e8f5e9; color: #2e7d32; }
-        .badge-pasajero { background: #e3f2fd; color: #1565c0; }
+        .badge-pasajero  { background: #e3f2fd; color: #1565c0; }
 
         .alert {
             padding: 12px 16px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 16px;
             font-size: 14px;
             display: none;
+            font-weight: 500;
         }
-        .alert-success { background: #e8f5e9; color: #2e7d32; border-left: 4px solid #2e7d32; }
-        .alert-error { background: #ffebee; color: #c62828; border-left: 4px solid #c62828; }
+        .alert-success { background: #e8f5e9; color: #2e7d32; border-left: 4px solid #43a047; }
+        .alert-error   { background: #ffebee; color: #c62828; border-left: 4px solid #e53935; }
 
-        .actions { display: flex; gap: 8px; }
+        .actions { display: flex; gap: 6px; }
+
+        .empty { text-align: center; color: #aaa; padding: 24px; font-size: 14px; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .stat-icon { font-size: 32px; }
+        .stat-number { font-size: 28px; font-weight: 700; color: #1a73e8; }
+        .stat-label { font-size: 13px; color: #777; }
     </style>
 </head>
 <body>
 
 <header>
-    <div>
-        <h1>🚌 ITM Ride</h1>
-        <p>Carpooling Universitario — ITM</p>
-    </div>
+    <h1>🚌 ITM Ride</h1>
+    <p>Carpooling Universitario — Instituto Tecnológico Metropolitano</p>
 </header>
 
 <nav>
-    <button class="active" onclick="showSection('usuarios')">👤 Usuarios</button>
-    <button onclick="showSection('viajes')">🗺️ Viajes</button>
+    <button class="active" onclick="showSection('usuarios', this)">👤 Usuarios</button>
+    <button onclick="showSection('viajes', this)">🗺️ Viajes</button>
 </nav>
 
 <div class="container">
 
-    <!-- SECCIÓN USUARIOS -->
+    <!-- USUARIOS -->
     <div id="sec-usuarios" class="section active">
 
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div>
+                    <div class="stat-number" id="total-usuarios">0</div>
+                    <div class="stat-label">Usuarios registrados</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🚗</div>
+                <div>
+                    <div class="stat-number" id="total-conductores">0</div>
+                    <div class="stat-label">Conductores activos</div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
-            <h2>➕ Registrar Usuario</h2>
+            <h2>➕ Registrar nuevo usuario</h2>
             <div id="alert-usuario" class="alert"></div>
             <div class="form-grid">
                 <div class="form-group">
@@ -166,42 +213,59 @@
                     <input type="text" id="u-barrio" placeholder="Ej: Laureles">
                 </div>
                 <div class="form-group">
-                    <label>Tipo</label>
+                    <label>Tipo de usuario</label>
                     <select id="u-tipo">
-                        <option value="PASAJERO">Pasajero</option>
-                        <option value="CONDUCTOR">Conductor</option>
+                        <option value="PASAJERO">🧍 Pasajero</option>
+                        <option value="CONDUCTOR">🚗 Conductor</option>
                     </select>
                 </div>
             </div>
-            <button class="btn btn-primary" onclick="crearUsuario()">Registrar</button>
+            <button class="btn btn-primary" onclick="crearUsuario()">✅ Registrar usuario</button>
         </div>
 
         <div class="card">
-            <h2>👥 Usuarios Registrados</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Teléfono</th>
-                        <th>Barrio</th>
-                        <th>Tipo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-usuarios">
-                    <tr><td colspan="7" style="text-align:center;color:#999">Cargando...</td></tr>
-                </tbody>
-            </table>
+            <h2>👥 Usuarios registrados</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Barrio</th>
+                            <th>Tipo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-usuarios"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- SECCIÓN VIAJES -->
+    <!-- VIAJES -->
     <div id="sec-viajes" class="section">
 
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">🗺️</div>
+                <div>
+                    <div class="stat-number" id="total-viajes">0</div>
+                    <div class="stat-label">Viajes publicados</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💺</div>
+                <div>
+                    <div class="stat-number" id="total-cupos">0</div>
+                    <div class="stat-label">Cupos disponibles</div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
-            <h2>➕ Publicar Viaje</h2>
+            <h2>➕ Publicar nuevo viaje</h2>
             <div id="alert-viaje" class="alert"></div>
             <div class="form-grid">
                 <div class="form-group">
@@ -225,32 +289,32 @@
                     <input type="number" id="v-cupos" placeholder="Ej: 3" min="1">
                 </div>
                 <div class="form-group">
-                    <label>ID del Conductor</label>
+                    <label>ID del conductor</label>
                     <input type="number" id="v-conductor" placeholder="Ej: 1">
                 </div>
             </div>
-            <button class="btn btn-primary" onclick="crearViaje()">Publicar Viaje</button>
+            <button class="btn btn-primary" onclick="crearViaje()">✅ Publicar viaje</button>
         </div>
 
         <div class="card">
-            <h2>🗺️ Viajes Disponibles</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Cupos</th>
-                        <th>Conductor ID</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-viajes">
-                    <tr><td colspan="8" style="text-align:center;color:#999">Cargando...</td></tr>
-                </tbody>
-            </table>
+            <h2>🗺️ Viajes disponibles</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Cupos</th>
+                            <th>Conductor</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-viajes"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -259,11 +323,11 @@
 <script>
 const API = 'http://localhost:8080/api';
 
-function showSection(name) {
+function showSection(name, btn) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     document.getElementById('sec-' + name).classList.add('active');
-    event.target.classList.add('active');
+    btn.classList.add('active');
     if (name === 'usuarios') cargarUsuarios();
     if (name === 'viajes') cargarViajes();
 }
@@ -280,22 +344,24 @@ function showAlert(id, msg, type) {
 async function cargarUsuarios() {
     const res = await fetch(API + '/usuarios');
     const data = await res.json();
+    document.getElementById('total-usuarios').textContent = data.length;
+    document.getElementById('total-conductores').textContent = data.filter(u => u.tipo === 'CONDUCTOR').length;
     const tbody = document.getElementById('tabla-usuarios');
     if (data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#999">No hay usuarios registrados</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="empty">No hay usuarios registrados aún</td></tr>';
         return;
     }
     tbody.innerHTML = data.map(u => `
         <tr>
-            <td>${u.id}</td>
+            <td><b>#${u.id}</b></td>
             <td>${u.nombre}</td>
             <td>${u.correo}</td>
             <td>${u.telefono}</td>
             <td>${u.barrio}</td>
             <td><span class="badge badge-${u.tipo.toLowerCase()}">${u.tipo}</span></td>
             <td class="actions">
-                <button class="btn btn-warning" onclick="editarUsuario(${u.id})">Editar</button>
-                <button class="btn btn-danger" onclick="eliminarUsuario(${u.id})">Eliminar</button>
+                <button class="btn btn-warning" onclick="editarUsuario(${u.id})">✏️ Editar</button>
+                <button class="btn btn-danger" onclick="eliminarUsuario(${u.id})">🗑️ Eliminar</button>
             </td>
         </tr>
     `).join('');
@@ -310,7 +376,7 @@ async function crearUsuario() {
         tipo: document.getElementById('u-tipo').value
     };
     if (!usuario.nombre || !usuario.correo) {
-        showAlert('alert-usuario', 'Por favor completa nombre y correo', 'error');
+        showAlert('alert-usuario', '⚠️ Por favor completa nombre y correo', 'error');
         return;
     }
     const res = await fetch(API + '/usuarios', {
@@ -319,21 +385,18 @@ async function crearUsuario() {
         body: JSON.stringify(usuario)
     });
     if (res.ok) {
-        showAlert('alert-usuario', 'Usuario registrado exitosamente', 'success');
-        document.getElementById('u-nombre').value = '';
-        document.getElementById('u-correo').value = '';
-        document.getElementById('u-telefono').value = '';
-        document.getElementById('u-barrio').value = '';
+        showAlert('alert-usuario', '✅ Usuario registrado exitosamente', 'success');
+        ['u-nombre','u-correo','u-telefono','u-barrio'].forEach(id => document.getElementById(id).value = '');
         cargarUsuarios();
     } else {
-        showAlert('alert-usuario', 'Error al registrar usuario', 'error');
+        showAlert('alert-usuario', '❌ Error al registrar usuario', 'error');
     }
 }
 
 async function eliminarUsuario(id) {
     if (!confirm('¿Seguro que deseas eliminar este usuario?')) return;
     await fetch(API + '/usuarios/' + id, { method: 'DELETE' });
-    showAlert('alert-usuario', 'Usuario eliminado', 'success');
+    showAlert('alert-usuario', '✅ Usuario eliminado', 'success');
     cargarUsuarios();
 }
 
@@ -349,7 +412,7 @@ async function editarUsuario(id) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre, correo, telefono, barrio, tipo })
     });
-    showAlert('alert-usuario', 'Usuario actualizado', 'success');
+    showAlert('alert-usuario', '✅ Usuario actualizado', 'success');
     cargarUsuarios();
 }
 
@@ -357,23 +420,25 @@ async function editarUsuario(id) {
 async function cargarViajes() {
     const res = await fetch(API + '/viajes');
     const data = await res.json();
+    document.getElementById('total-viajes').textContent = data.length;
+    document.getElementById('total-cupos').textContent = data.reduce((acc, v) => acc + v.cupos, 0);
     const tbody = document.getElementById('tabla-viajes');
     if (data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#999">No hay viajes disponibles</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="empty">No hay viajes publicados aún</td></tr>';
         return;
     }
     tbody.innerHTML = data.map(v => `
         <tr>
-            <td>${v.id}</td>
+            <td><b>#${v.id}</b></td>
             <td>${v.origen}</td>
             <td>${v.destino}</td>
             <td>${v.fecha}</td>
             <td>${v.hora}</td>
-            <td>${v.cupos}</td>
-            <td>${v.conductorId}</td>
+            <td><b>${v.cupos}</b> cupos</td>
+            <td>#${v.conductorId}</td>
             <td class="actions">
-                <button class="btn btn-warning" onclick="editarViaje(${v.id})">Editar</button>
-                <button class="btn btn-danger" onclick="eliminarViaje(${v.id})">Eliminar</button>
+                <button class="btn btn-warning" onclick="editarViaje(${v.id})">✏️ Editar</button>
+                <button class="btn btn-danger" onclick="eliminarViaje(${v.id})">🗑️ Eliminar</button>
             </td>
         </tr>
     `).join('');
@@ -389,7 +454,7 @@ async function crearViaje() {
         conductorId: parseInt(document.getElementById('v-conductor').value)
     };
     if (!viaje.origen || !viaje.destino || !viaje.fecha) {
-        showAlert('alert-viaje', 'Por favor completa origen, destino y fecha', 'error');
+        showAlert('alert-viaje', '⚠️ Por favor completa origen, destino y fecha', 'error');
         return;
     }
     const res = await fetch(API + '/viajes', {
@@ -398,23 +463,18 @@ async function crearViaje() {
         body: JSON.stringify(viaje)
     });
     if (res.ok) {
-        showAlert('alert-viaje', 'Viaje publicado exitosamente', 'success');
-        document.getElementById('v-origen').value = '';
-        document.getElementById('v-destino').value = '';
-        document.getElementById('v-fecha').value = '';
-        document.getElementById('v-hora').value = '';
-        document.getElementById('v-cupos').value = '';
-        document.getElementById('v-conductor').value = '';
+        showAlert('alert-viaje', '✅ Viaje publicado exitosamente', 'success');
+        ['v-origen','v-destino','v-fecha','v-hora','v-cupos','v-conductor'].forEach(id => document.getElementById(id).value = '');
         cargarViajes();
     } else {
-        showAlert('alert-viaje', 'Error al publicar viaje', 'error');
+        showAlert('alert-viaje', '❌ Error al publicar viaje', 'error');
     }
 }
 
 async function eliminarViaje(id) {
     if (!confirm('¿Seguro que deseas eliminar este viaje?')) return;
     await fetch(API + '/viajes/' + id, { method: 'DELETE' });
-    showAlert('alert-viaje', 'Viaje eliminado', 'success');
+    showAlert('alert-viaje', '✅ Viaje eliminado', 'success');
     cargarViajes();
 }
 
@@ -431,12 +491,11 @@ async function editarViaje(id) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ origen, destino, fecha, hora, cupos: parseInt(cupos), conductorId: parseInt(conductorId) })
     });
-    showAlert('alert-viaje', 'Viaje actualizado', 'success');
+    showAlert('alert-viaje', '✅ Viaje actualizado', 'success');
     cargarViajes();
 }
 
 cargarUsuarios();
 </script>
-
 </body>
 </html>
