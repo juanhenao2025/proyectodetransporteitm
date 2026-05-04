@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/viajes")
-@Tag(name = "Viajes", description = "Operaciones para gestionar viajes del carpooling")
+@Tag(name = "Viajes", description = "Gestión de viajes compartidos entre estudiantes del ITM")
 public class ViajeController {
 
     private final ViajeService viajeService;
