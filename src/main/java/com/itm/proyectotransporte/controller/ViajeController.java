@@ -1,7 +1,7 @@
 package com.itm.proyectotransporte.controller;
 
+import com.itm.proyectotransporte.interfaces.IViajeService;
 import com.itm.proyectotransporte.model.Viaje;
-import com.itm.proyectotransporte.service.ViajeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/viajes")
-@Tag(name = "Viajes", description = "Operaciones para gestionar viajes del carpooling")
+@Tag(name = "Viajes", description = "Gestión de viajes compartidos entre estudiantes del ITM")
 public class ViajeController {
 
-    private final ViajeService viajeService;
+    private final IViajeService viajeService;
 
-    public ViajeController(ViajeService viajeService) {
+    public ViajeController(IViajeService viajeService) {
         this.viajeService = viajeService;
     }
 
@@ -30,9 +30,7 @@ public class ViajeController {
     @Operation(summary = "Buscar viaje por ID")
     public ResponseEntity<Viaje> buscar(@PathVariable int id) {
         Viaje v = viajeService.buscarPorId(id);
-        if (v == null) {
-            return ResponseEntity.notFound().build();
-        }
+        if (v == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(v);
     }
 

@@ -1,5 +1,6 @@
 package com.itm.proyectotransporte.dao;
 
+import com.itm.proyectotransporte.interfaces.IViajeDAO;
 import com.itm.proyectotransporte.model.Viaje;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ViajeDAO {
+public class ViajeDAO implements IViajeDAO {
 
     private final String URL = "jdbc:mysql://localhost:3306/itm_ride";
     private final String USER = "root";
@@ -18,6 +19,7 @@ public class ViajeDAO {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
+    @Override
     public List<Viaje> listarTodos() {
         List<Viaje> viajes = new ArrayList<>();
         String sql = "SELECT * FROM viajes";
@@ -41,6 +43,7 @@ public class ViajeDAO {
         return viajes;
     }
 
+    @Override
     public Viaje buscarPorId(int id) {
         String sql = "SELECT * FROM viajes WHERE id = ?";
         try (Connection con = getConnection();
@@ -64,6 +67,7 @@ public class ViajeDAO {
         return null;
     }
 
+    @Override
     public void insertar(Viaje v) {
         String sql = "INSERT INTO viajes (origen, destino, fecha, hora, cupos, conductor_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = getConnection();
@@ -80,6 +84,7 @@ public class ViajeDAO {
         }
     }
 
+    @Override
     public void actualizar(Viaje v) {
         String sql = "UPDATE viajes SET origen=?, destino=?, fecha=?, hora=?, cupos=?, conductor_id=? WHERE id=?";
         try (Connection con = getConnection();
@@ -97,6 +102,7 @@ public class ViajeDAO {
         }
     }
 
+    @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM viajes WHERE id = ?";
         try (Connection con = getConnection();
