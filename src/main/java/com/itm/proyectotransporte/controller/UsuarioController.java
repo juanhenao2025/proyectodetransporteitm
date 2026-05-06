@@ -1,7 +1,7 @@
 package com.itm.proyectotransporte.controller;
 
+import com.itm.proyectotransporte.interfaces.IUsuarioService;
 import com.itm.proyectotransporte.model.Usuario;
-import com.itm.proyectotransporte.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import java.util.List;
 @Tag(name = "Usuarios", description = "Operaciones para gestionar usuarios del carpooling")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    private final IUsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(IUsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
@@ -30,9 +30,7 @@ public class UsuarioController {
     @Operation(summary = "Buscar usuario por ID")
     public ResponseEntity<Usuario> buscar(@PathVariable int id) {
         Usuario u = usuarioService.buscarPorId(id);
-        if (u == null) {
-            return ResponseEntity.notFound().build();
-        }
+        if (u == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(u);
     }
 

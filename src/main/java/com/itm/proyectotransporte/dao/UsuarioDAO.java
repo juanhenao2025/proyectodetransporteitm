@@ -1,5 +1,6 @@
 package com.itm.proyectotransporte.dao;
 
+import com.itm.proyectotransporte.interfaces.IUsuarioDAO;
 import com.itm.proyectotransporte.model.Usuario;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UsuarioDAO {
+public class UsuarioDAO implements IUsuarioDAO {
 
     private final String URL = "jdbc:mysql://localhost:3306/itm_ride";
     private final String USER = "root";
@@ -18,6 +19,7 @@ public class UsuarioDAO {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
+    @Override
     public List<Usuario> listarTodos() {
         List<Usuario> usuarios = new ArrayList<>();
         String sql = "SELECT * FROM usuarios";
@@ -40,6 +42,7 @@ public class UsuarioDAO {
         return usuarios;
     }
 
+    @Override
     public Usuario buscarPorId(int id) {
         String sql = "SELECT * FROM usuarios WHERE id = ?";
         try (Connection con = getConnection();
@@ -62,6 +65,7 @@ public class UsuarioDAO {
         return null;
     }
 
+    @Override
     public void insertar(Usuario u) {
         String sql = "INSERT INTO usuarios (nombre, correo, telefono, barrio, tipo) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = getConnection();
@@ -77,6 +81,7 @@ public class UsuarioDAO {
         }
     }
 
+    @Override
     public void actualizar(Usuario u) {
         String sql = "UPDATE usuarios SET nombre=?, correo=?, telefono=?, barrio=?, tipo=? WHERE id=?";
         try (Connection con = getConnection();
@@ -93,6 +98,7 @@ public class UsuarioDAO {
         }
     }
 
+    @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM usuarios WHERE id = ?";
         try (Connection con = getConnection();
